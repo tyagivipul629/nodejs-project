@@ -1,10 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {Route, Switch} from 'react-router-dom';
+import Home from './components/Home';
 
-function App() {
-  return (
-    <h1>This is App.js</h1>
+class App extends React.Component {
+  render(){
+    return (
+    <Switch>
+      <Route exact path="/" render={(props)=>(<Home {...props} />)} />
+    </Switch>
   );
+  }
 }
 
 export default App;
