@@ -20,7 +20,7 @@ class App extends React.Component {
       <Route exact path="/" render={(props)=>(<Home {...props} />)} />
       <Route exact path="/login" render={(props)=>(<Login {...props} />)} />
       <Route exact path="/signup" render={(props)=>(<Signup {...props} />)} />
-      <Route exact path="/description/:id" render={(props)=>(<Description {...props} />)} />
+      <Route exact path="/description/:name" render={(props)=>(<Description {...props} />)} />
       <Route exact path="/cart" render={(props)=>(<Cart {...props} />)} />
       <Route exact path="/notification" render={(props)=>(<Notification {...props} />)} />
       <Route exact path="/wishlist" render={(props)=>(<WishList {...props} />)} />
