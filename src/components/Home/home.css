@@ -1,6 +1,6 @@
 #dealCard{
-    width: 16rem; 
-    height: 370px;
+    width: 14rem; 
+    height: fit-content;
     border-width: 3px;
     border-radius: 10px; 
     border-color: rgb(131, 26, 57);

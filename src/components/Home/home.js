@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import DealItems from './DealItems';
 import './home.css'
 
 class Home extends React.Component{
@@ -8,52 +8,61 @@ class Home extends React.Component{
         super(props);
         this.state={
             deals: [],
-            otherProds: []
+            otherProds: [],
+            selectedCategory: 'Mobile'
         }
     }
 
     componentDidMount(){
         axios.get('db.json').then(res=>{
             this.setState({
-                deals: res.data
+                deals: res.data,
+            })
+        }).catch(err=>{
+            console.log(err);
+        })
+
+        axios.get('db.json').then(res=>{
+            this.setState({
+                otherProds: res.data
             })
         }).catch(err=>{
             console.log(err);
         })
     }
 
-    render(){
-
-        const dealItems=this.state.deals.map(elem=>{
-            return(
-                <Link to={`/description/${elem.displayName}`} style={{textDecoration: 'none', color: 'black', maxWidth: 'fit-content'}}>
-                <div className="card" id="dealCard">
-                    <img src={elem.imageUrl} className="card-img-top" alt="Not visible" />
-                    <div className="card-body">
-                        <h5>{elem.displayName}</h5>
-                        <p>{elem.shortDesc}</p>
-                        <span id="discount">{elem.discount}</span>
-                    </div>
-                </div>
-                </Link>
-            );
+    handleCategoryChange=(e)=>{
+        console.log(e.target.value);
+        this.setState({
+            selectedCategory: e.target.value,
         })
+    }
+
+    render(){
 
         return(
             <div className="container-fluid" style={{marginTop: '1rem'}}>
                 <h2 id="heading">Today's Deal Products</h2>
                 <div className="row" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    {this.state.deals.length!==0?dealItems:<div></div>}
+                    {this.state.deals.length!==0?<DealItems items={this.state.deals} />:<div></div>}
                 </div>
                 <h2 id="heading">Other Products</h2>
-                <select className="form-select" aria-label="Deafult">
-                    <option selected>Mobile</option>
-                    <option>Laptop</option>
-                    <option>Camera</option>
-                    <option>Watch</option>
-                    <option>Headphone</option>
-                    <option>Television</option>
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                <select className="form-select" aria-label="Deafult" 
+                value={this.state.selectedValue} 
+                onChange={this.handleCategoryChange}
+                style={{width:"fit-content"}}>
+                    <option value="Mobile">Mobile</option>
+                    <option value="Laptop">Laptop</option>
+                    <option value="Camera">Camera</option>
+                    <option value="Watch">Watch</option>
+                    <option value="Headphone">Headphone</option>
+                    <option value="Television">Television</option>
                 </select>
+                </div>
+                <div className="row" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    {this.state.otherProds.length!==0?<DealItems items={this.state.otherProds.filter(elem=>elem.category.toLowerCase()==this.state.selectedCategory.toLowerCase())} />:<div></div>}
+                </div>
             </div>
         );
     }
