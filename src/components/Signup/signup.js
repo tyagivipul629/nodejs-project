@@ -15,6 +15,8 @@ class signup extends React.Component{
             textStyle:''
         }
     }
+    
+
     handleChange = (e) => {
         this.setState({
             [e.target.name]:e.target.value,
@@ -26,11 +28,11 @@ class signup extends React.Component{
             var re = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
             return re.test(email);
         }
-        if(this.state.email =='' || this.state.password==''){
+        if(this.state.email =='' || this.state.password1=='' || this.state.password2=='' || this.state.uname=='' || this.state.phone==''){
             this.setState({message:"All fields are mandatory", textStyle:"danger"})
         } 
         else {
-            if(validateEmail(this.state.email)){
+            if(validateEmail(this.state.email) && validatePass(this.state.password1) && validateUname(this.state.uname)){
                 this.setState({message:"Looks good!",
                 textStyle:"success"
                 })
@@ -40,7 +42,9 @@ class signup extends React.Component{
                 textStyle:"danger"
             })
         }
-    }  
+      
+    } 
+    this.props.history.replace('/login');  
 }
     render(){
         return(
@@ -49,7 +53,7 @@ class signup extends React.Component{
                
    
     
-    <form  style={{position:'relative',left:'50px'}} onSubmit={this.handleSubmit} action="/home">
+    <form  style={{position:'relative',left:'50px'}} onSubmit={this.handleSubmit} >
                   <b><h5>SignUp</h5></b><br/>
                     <div className="form-group">
                         <label>Username:</label>
