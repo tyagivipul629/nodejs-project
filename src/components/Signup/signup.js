@@ -26,34 +26,22 @@ class signup extends React.Component{
             var re = /^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i;
             return re.test(email);
         }
-        const validateUname=(uname)=>{
-            var re=/\d+/g
-             return re.test(uname)
-        }
-        if(this.state.uname =='' || this.state.email==''||this.state.phone==''||this.state.password1==''||this.state.password2==''){
+        if(this.state.email =='' || this.state.password==''){
             this.setState({message:"All fields are mandatory", textStyle:"danger"})
         } 
-        else if(this.state.uname.length<6){ this.setState({message:"Username should contain atleast 7 characters", textStyle:"danger"})}
-        else if(this.state.password1.length<6) {this.setState({message:"Username should contain atleast 7 characters", textStyle:"danger"})}
-        
-        else if(this.state.password1!==this.state.password2){
-            this.setState({message:"Password Mismatch", textStyle:"danger"})
-        }
         else {
-
-            if((validateUname(this.state.uname))&& (validateEmail(this.state.email))){
-                this.setState({message:"Looks good!", textStyle:"success"}) 
-            }  
-           
-            
-             
+            if(validateEmail(this.state.email)){
+                this.setState({message:"Looks good!",
+                textStyle:"success"
+                })
+            }
             else {
                 this.setState({message:"Please enter a valid email id",
                 textStyle:"danger"
             })
         }
     }  
-    }
+}
     render(){
         return(
             <React.Fragment>
@@ -61,7 +49,7 @@ class signup extends React.Component{
                
    
     
-    <form  style={{position:'relative',left:'50px'}} onSubmit={this.handleSubmit} >
+    <form  style={{position:'relative',left:'50px'}} onSubmit={this.handleSubmit} action="/home">
                   <b><h5>SignUp</h5></b><br/>
                     <div className="form-group">
                         <label>Username:</label>
@@ -84,7 +72,7 @@ class signup extends React.Component{
                         <input style={{width:'40%'}}  placeholder="Eonfirm the password"className="form-control" name="password2" type="password" onChange={this.handleChange}/>
                     </div>
                     {this.state.message !== '' && <div className={`text text-${this.state.textStyle}`}>{this.state.message}</div>}<br/>
-                    <button className="btn btn-primary" onClick={this.handleSubmit}>Register</button>
+                    <submit className="btn btn-primary" onClick={this.handleSubmit}>Register</submit>
                 </form>
                
     
