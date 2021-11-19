@@ -9,6 +9,7 @@ import Cart from './components/Cart/cart';
 import WishList from './components/WishList/wishlist';
 import Profile from './components/Profile/profile';
 import Navbar from './components/Navbar/navbar';
+import Orders from './components/Orders/orders';
 
 class App extends React.Component {
   render(){
@@ -24,6 +25,7 @@ class App extends React.Component {
       <Route exact path="/notification" render={(props)=>(<Notification {...props} />)} />
       <Route exact path="/wishlist" render={(props)=>(<WishList {...props} />)} />
       <Route exact path="/profile" render={(props)=>(<Profile {...props} />)} />
+      <Route exact path="/orders" render={(props)=>(<Orders {...props} />)} />
     </Switch>
     </>
   );
