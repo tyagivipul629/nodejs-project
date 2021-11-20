@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import axios from 'axios'
+import './signup.css'
 
 class signup extends React.Component{
     constructor(){
@@ -128,17 +129,23 @@ class signup extends React.Component{
             <React.Fragment>
                 <br/>
                
-   
+                <div className="container" >
+          
+          <div className="row">
+                 <div className="col-md-4 offset-4">
+                 <div className="card" className="card border-success mb-3"  style={{width: "28rem"}}>
+                 <div class="card-header bg-transparent border-success"><center><h5 className="header">Ekart Application</h5></center></div>
+                    <div className="card-body" >
     
     <form  style={{position:'relative',left:'50px'}} onSubmit={this.handleSubmit} onClick={()=>{this.handlecall(this.state)}}>
-                  <b><h5>SignUp</h5></b><br/>
+                  <b><h6 className="shaodow"><i>Leverage the benefits of registered users...</i></h6></b><br/>
                     <div className="form-group">
                         <label>Username:</label>
-                        <input style={{width:'40%'}} placeholder="Only Characters Allowed(First Name)" className="form-control" name="uname" type="text" onChange={this.handleChange}/>
+                        <input style={{width:'40%'}} placeholder="First Name" className="form-control" name="uname" type="text" onChange={this.handleChange}/>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group ">
                         <label>Email Address:</label>
-                        <input style={{width:'40%'}} placeholder="ex:abc@gmail.com" className="form-control" name="email" type="text" onChange={this.handleChange}/>
+                        <input className="input-lg" style={{width:'40%'}} placeholder="ex:abc@gmail.com" className="form-control" name="email" type="text" onChange={this.handleChange}/>
                     </div>
                     <div className="form-group">
                         <label>Phone Number:</label>
@@ -153,10 +160,20 @@ class signup extends React.Component{
                         <input style={{width:'40%'}}  placeholder="Aa@1"className="form-control" name="password2" type="password" onChange={this.handleChange}/>
                     </div>
                     {this.state.message !== '' && <div className={`text text-${this.state.textStyle}`}>{this.state.message}</div>}<br/>
-                    <submit className="btn btn-success" onClick={this.handleSubmit}>Register</submit>
+                    <submit className="btn btn-danger" onClick={this.handleSubmit}>Register</submit>
                 </form>
                
-    
+                </div>
+                             </div>
+   
+   
+                   </div>
+   
+   
+   
+            </div>
+        </div>
+        
   
        
            
