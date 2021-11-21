@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import axios from 'axios'
 import './signup.css'
+import authToken from '../authToken'
 
 class signup extends React.Component{
     constructor(){
@@ -21,8 +22,16 @@ class signup extends React.Component{
     handlecall=(state)=>{
         console.log("method called")
         var body={userName:this.state.userName,userEmail:this.state.userEmail,userPassword:this.state.userPassword,userPhone:this.state.userPhone}
-        axios.post('http://10.85.92.138:8002/signup',state).then((res)=>{
-            console.log('added');
+        axios.post('http://10.85.92.138:8002/signup',body,authToken()).then((res)=>{
+            console.log(res);
+            if(res.data.status===true){
+                console.log('added');
+                this.setState({message:"Succesfully Signed Up"})
+                 this.props.history.replace('/login')
+            }else{
+               this.setState({message:"User already exist"})
+            }
+         
                 
 
         }).catch(()=>{
@@ -92,9 +101,8 @@ class signup extends React.Component{
                if(validatePass(this.state.userPassword)){
                    if(validateUname(this.state.userName)){
                        if(confirmPass(this.state.userPassword,this.state.password2)){
-                        this.setState({message:"Succesfully Signed Up"})
-                         
-                          this.props.history.replace('/login');
+                      this.handlecall(state)
+                       
                        }else{
                         this.setState({message:"Passwords are not matching"})
                        }
@@ -133,7 +141,7 @@ class signup extends React.Component{
                  <div class="card-header bg-transparent border-success"><center><h5 className="header">Ekart Application</h5></center></div>
                     <div className="card-body" >
     
-    <form  style={{position:'relative',left:'50px'}} onSubmit={this.handleSubmit} onClick={()=>{this.handlecall(this.state)}}>
+    <form  style={{position:'relative',left:'50px'}} onSubmit={this.handleSubmit} >
                   <b><h6 className="shaodow"><i>Leverage the benefits of registered users...</i></h6></b><br/>
                     <div className="form-group">
                         <label>Username:</label>
@@ -169,7 +177,7 @@ class signup extends React.Component{
    
             </div>
         </div>
-        
+      
   
        
            
