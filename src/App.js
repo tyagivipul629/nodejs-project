@@ -11,6 +11,7 @@ import Profile from './components/Profile/profile';
 import Navbar from './components/Navbar/navbar';
 import Orders from './components/Orders/orders';
 import Search from './components/Search/search';
+import Test from './components/Test';
 import axios from 'axios';
 
 class App extends React.Component {
@@ -77,6 +78,7 @@ class App extends React.Component {
       <Route exact path="/wishlist" render={(props)=>(<WishList {...props} />)} />
       <Route exact path="/profile" render={(props)=>(<Profile {...props} />)} />
       <Route exact path="/orders" render={(props)=>(<Orders {...props} />)} />
+      <Route exact path="/test" component={Test} />
     </Switch>
     </>
   );

@@ -1,54 +1,64 @@
+import axios from "axios";
 import React from "react";
-//import axios from "axios";
+import { Link } from "react-router-dom";
+import authToken from "../authToken";
+
+
+const url="http://10.85.92.138:8002";
+
 class wishlist extends React.Component {
     constructor(){
         super();
-        //this.setstate=details{[]}
+        this.state={
+            wishList: [],
+            userid: ''
+        }
     }
 
-    change=(e,name)=>{
-        e.preventDefault();
-        //let newobj={
-         
-       // }
-        if(name==="bag")
-        {
-            console.log("Item moved to the cart");
-        }
-        if(name==="card")
-        {
-            console.log("Item is Removed");
-        }
-           // axios.post("details.json/guest/addtocart",newobj)
-            //.then((res)=>console.log(res.data))
-            //.catch((err)=>console.log(err))
+    componentDidMount(){
+        const userid=localStorage.getItem('userid');
+        this.setState({
+            userid: userid
+        },()=>{
+            axios.get(url+`/${userid}/wishlist`,{},authToken()).then(res=>{
+                const wishlist=res.data.wishlist;
+            })
+        })
+        
     }
+
+    addToCart=(elem)=>{
+
+    }
+
+    removeItem=()=>{
+        //axios.post(url+``)
+    }
+
     render()
     {
+        const wishListItem=this.state.wishList.map(elem=>{
+            return(
+                <Link to={`description/${elem.displayName}`}>
+                <div className="card" id="wishCard">
+                    <img src={elem.imageUrl} className="card-img-top" alt="Not visible" />
+                    <div className="card-body">
+                        <h5>{elem.displayName}</h5>
+                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                            <button className="bg-success" onClick={()=>this.addToCart()}>Add To Cart</button>
+                            <button className="bg-danger" onClick={()=>this.removeItem()}>Remove</button>
+                        </div>
+                    </div>
+                </div>
+                </Link>
+            );
+        })
         return(
-            <React.Fragment>
-                <form>
-                    <h2 style={{color:"grey"}}>Your favourites</h2>
-                    <figure>
-                        <img src="https://image.shutterstock.com/z/stock-photo-minsk-belarus-april-notebook-samsung-series-ultra-os-windows-samsung-group-412675369.jpg"
-                        height={200}
-                        width={190}/>
-                        <h4 style={{marginLeft:"60px",textAlign:"left",color:"black"}}>Samsung</h4>
-                    </figure>
-                    <button 
-                    type="submit"
-                    style={{
-                        marginLeft:"60px",
-                        backgroundColor:"blue",
-                        color:"white"
-                    }}
-                    onClick={(e)=>this.change(e,"bag")}>Move to Cart</button>
-                    <button
-                    type="submit"
-                    style={{backgroundColor:"blue",color:"white"}}
-                     onClick={(e)=>this.change(e,"card")}>Remove</button>
-                </form>
-            </React.Fragment>
+            <div className="container-fluid" style={{marginTop: '1rem'}}>
+                <div className="row">
+                    {wishListItem}
+                </div>
+            </div>
 
         );
     }
