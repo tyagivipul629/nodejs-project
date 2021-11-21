@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import {Link} from 'react-router-dom';
 import './SearchBar.css';
 
-function Search({placeholder,data}){
+function SearchBar({placeholder,data}){
     const [filteredData,setfilteredData]=useState([]);
     const handleFilter = (event) => {
         const searchWord = event.target.value;
@@ -58,4 +58,4 @@ function Search({placeholder,data}){
     )
 
 }
-export default Search;
+export default SearchBar;

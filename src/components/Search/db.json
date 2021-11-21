@@ -1,0 +1,20 @@
+[
+    {"displayName": "Dell XS301",
+    "shortDesc":"Device with 8GB Ram and 1TB hard drive",
+    "category":"laptop", "discount": "20%","imageUrl":"/assets/images/dell1.jpg"},
+    {"displayName": "Lenovo ideapad",
+        "shortDesc":"Device with 16GB Ram and 512GB SSD",
+        "category":"laptop", "discount": "10%","imageUrl":"/assets/images/lenovo.jpg"},
+    {"displayName": "iPhone X",
+        "shortDesc":"A device with solid performance",
+        "category":"mobile", "discount": "25%","imageUrl":"/assets/images/iphone.jpg"},
+    {"displayName": "Nikon XP",
+        "shortDesc":"Capture the best moments with 64MP camera",
+        "category":"camera", "discount": "30%","imageUrl":"/assets/images/nikon.jpg"},
+    {"displayName": "Samsung S11",
+        "shortDesc":"A phone that would never let you down",
+        "category":"mobile", "discount": "10%","imageUrl":"/assets/images/samsung.jpg"},
+    {"displayName": "Titan C303",
+        "shortDesc":"Watch your time",
+        "category":"watch", "discount": "15%","imageUrl":"/assets/images/watch.jpg"}
+]

@@ -2,6 +2,7 @@ import React from 'react';
 
 class Navbar extends React.Component{
     render(){
+        console.log(this.props);
         return(
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container-fluid">
@@ -28,18 +29,17 @@ class Navbar extends React.Component{
                         <li className="nav-item active">
                             <a className="nav-link" href="/Cart"><i className="fa fa-shopping-cart"></i>Cart<span style={{padding: '3px',backgroundColor: 'red',color: 'white',marginLeft: '2px'}}>{this.props.cartCount}</span></a>
                         </li>
-                        {this.props.userid&&<><li className="nav-item active">
-                            <a className="nav-link" href="/profile"><i className="fa fa-user"></i>Profile</a>
-                        </li>
+                        {this.props.userid&&<>
                         <li className="nav-item active">
                             <a className="nav-link" href="/orders"><i className="fa fa-first-order"></i>My Orders</a>
                         </li>
                         <li className="nav-item active">
-                            <a className="nav-link" href="/wishlist"><i className="fa fa-heart"></i>Wishlist</a>
+                            <a className="nav-link" href="/profile"><i className="fa fa-user"></i>Profile</a>
                         </li>
                         <li className="nav-item active">
-                            <a className="nav-link" href="/notification"><i className="fa fa-bell"></i>Notifications<span style={{padding: '3px',color: 'white',backgroundColor: 'red', marginLeft: '2px'}}>{this.props.notifCount}</span></a>
-                        </li></>}
+                            <a className="nav-link" href="/wishlist"><i className="fa fa-heart"></i>Wishlist</a>
+                        </li>
+                        </>}
                     </ul>
                     {this.props.userid!=''&&<form className="d-flex">
         <button class="btn btn-outline-success" type="submit" onClick={this.props.unsetUser}><i className="fa fa-sign-out"></i>Logout</button>

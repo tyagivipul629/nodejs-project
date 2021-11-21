@@ -13,6 +13,11 @@ import Orders from './components/Orders/orders';
 import Search from './components/Search/search';
 import Test from './components/Test';
 import axios from 'axios';
+import authToken from './components/authToken';
+
+
+const url='http://10.85.92.138:8002'
+
 
 class App extends React.Component {
 
@@ -21,17 +26,15 @@ class App extends React.Component {
     this.state={
       username: '',
       userid: '',
-      cartCount: 0,
-      notifCount: 0
+      cartCount: 0
     }
   }
 
   fetchCartAndNotification=async(userid)=>{
-    //const cartres=await axios.get('/cartcount');
-    //const notifres=await axios.get('/notifcount');
+    const cartres=await axios.get(url+`/${userid}/cartcount`,authToken());
+    
     this.setState({
-      cartCount: 3,
-      notifCount: 4,
+      cartCount: cartres.data.CARTCOUNT,
       userid: userid
     })
   }
@@ -43,11 +46,19 @@ class App extends React.Component {
     if(username!==null&&userid!==null){
       this.fetchCartAndNotification(userid);
     }
+    else{
+      const items=JSON.parse(localStorage.getItem('items'));
+      if(items!=null)
+        this.setState({
+          cartCount: items.length
+        })
+    }
   }
 
   unsetUser=()=>{
     localStorage.removeItem('user');
     localStorage.removeItem('userid');
+    localStorage.removeItem('token');
     this.setState({
       userid: ''
     })
@@ -66,7 +77,7 @@ class App extends React.Component {
     return (
       <>
       <Navbar userid={this.state.userid} cartCount={this.state.cartCount} 
-      notifCount={this.state.notifCount} unsetUser={this.unsetUser} />
+       unsetUser={this.unsetUser} />
     <Switch>
       <Route exact path="/" render={(props)=>(<Home {...props} />)} />
       <Route exact path="/login" render={(props)=>(<Login {...props} setUser={this.setUser} />)} />
@@ -86,3 +97,10 @@ class App extends React.Component {
 }
 
 export default App;
+
+
+
+
+
+
+

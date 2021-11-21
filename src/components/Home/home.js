@@ -2,8 +2,10 @@ import React from 'react';
 import axios from 'axios';
 import DealItems from './DealItems';
 import './home.css'
+import authToken from '../authToken';
+import { Redirect } from 'react-router-dom';
 
-const url='';
+const url='http://10.85.92.138:8002';
 
 class Home extends React.Component{
     constructor(props){
@@ -12,33 +14,27 @@ class Home extends React.Component{
             deals: [],
             recommended: [],
             otherProds: [],
-            selectedCategory: 'Mobile'
+            selectedCategory: 'Phone'
         }
     }
 
     componentDidMount(){
-        /*axios.get(url+'/deals').then(res=>{
-            this.setState({
-                deals: res.data,
-            })
-        }).catch(err=>{
-            console.log(err);
-        })*/
-        axios.get('db.json').then(res=>{
-            this.setState({
-                deals: res.data,
-            })
+        axios.get(url+'/deals',authToken()).then(res=>{
+            if(res.data.status==true)
+                this.setState({
+                    deals: res.data.data,
+                })
         }).catch(err=>{
             console.log(err);
         })
 
-        /*axios.get(url+'/allProducts').then(res=>{
+        axios.get(url+'/products',authToken()).then(res=>{
             this.setState({
-                otherProds: res.data
+                otherProds: res.data.data
             })
         }).catch(err=>{
             console.log(err);
-        })*/
+        })
 
         /*axios.get(url+'/recommendatons').then(res=>{
             this.setState({
@@ -47,14 +43,6 @@ class Home extends React.Component{
         }).catch(err=>{
             console.log(err);
         })*/
-
-        axios.get('db.json').then(res=>{
-            this.setState({
-                otherProds: res.data
-            })
-        }).catch(err=>{
-            console.log(err);
-        })
     }
 
     handleCategoryChange=(e)=>{
@@ -65,6 +53,7 @@ class Home extends React.Component{
     }
 
     render(){
+        if(localStorage.getItem('userid')==null) return <Redirect to="/login" />;
 
         return(
             <div className="container-fluid" style={{marginTop: '1rem'}}>
@@ -74,7 +63,7 @@ class Home extends React.Component{
                 </div>
                 <h2 id="heading">Recommended Products</h2>
                 <div className="row" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    {this.state.recommended.length!==0?<DealItems items={this.state.recommended} />:<div></div>}
+                    {this.state.recommended.length!==0?<DealItems items={this.state.recommended} />:<div><h3 style={{textAlign: 'center'}}>No recommended products as of now</h3></div>}
                 </div>
                 <h2 id="heading">Other Products</h2>
                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
@@ -82,7 +71,7 @@ class Home extends React.Component{
                 value={this.state.selectedValue} 
                 onChange={this.handleCategoryChange}
                 style={{width:"fit-content"}}>
-                    <option value="Mobile">Mobile</option>
+                    <option value="Phone">Mobile</option>
                     <option value="Laptop">Laptop</option>
                     <option value="Camera">Camera</option>
                     <option value="Watch">Watch</option>

@@ -17,7 +17,8 @@ function DealItems({items}){
             </Link>
         );
     })
-    return dealItems;
+    //if(items.length==0) return(<h3 style={{textAlign: 'center'}}>No Recommended products for now</h3>)
+     return dealItems;
 }
 
 export default DealItems;
