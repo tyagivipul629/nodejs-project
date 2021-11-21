@@ -6,7 +6,7 @@ class Running extends React.Component{
     render(){
         return(
             
-                 <SearchBar placeholder="Search products"data={ProductData} />
+                 <SearchBar placeholder="Search products" data={ProductData} />
                    
         );
     }

@@ -28,9 +28,7 @@ class Navbar extends React.Component{
                         <li className="nav-item active">
                             <a className="nav-link" href="/Cart"><i className="fa fa-shopping-cart"></i>Cart<span style={{padding: '3px',backgroundColor: 'red',color: 'white',marginLeft: '2px'}}>{this.props.cartCount}</span></a>
                         </li>
-                        {this.props.userid&&<><li className="nav-item active">
-                            <a className="nav-link" href="/profile"><i className="fa fa-user"></i>Profile</a>
-                        </li>
+                        {this.props.userid&&<>
                         <li className="nav-item active">
                             <a className="nav-link" href="/orders"><i className="fa fa-first-order"></i>My Orders</a>
                         </li>

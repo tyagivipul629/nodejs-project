@@ -32,7 +32,7 @@ class login extends React.Component {
             {userEmail: this.state.Email, userPassword: this.state.Password})
             .then(res=>{
                 if(res.data.status=="true"){
-                    localStorage.setItem('user',this.state.email);
+                    localStorage.setItem('user',this.state.Email);
                     localStorage.setItem('userid',res.data.userid);
                     localStorage.setItem('token',res.data.token);
                     this.props.setUser(this.state.email,res.data.userid);

@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios'
 import './signup.css'
 import authToken from '../authToken'
+import { Redirect } from 'react-router-dom';
 
 class signup extends React.Component{
     constructor(){
@@ -15,7 +16,8 @@ class signup extends React.Component{
             userPassword:'',
             password2:'',
             message:'',
-            textStyle:''
+            textStyle:'',
+            redirect: false
         }
     }
     
@@ -24,10 +26,10 @@ class signup extends React.Component{
         var body={userName:this.state.userName,userEmail:this.state.userEmail,userPassword:this.state.userPassword,userPhone:this.state.userPhone}
         axios.post('http://10.85.92.138:8002/signup',body,authToken()).then((res)=>{
             console.log(res);
-            if(res.data.status===true){
+            if(res.data.status==="true"){
                 console.log('added');
                 this.setState({message:"Succesfully Signed Up"})
-                 this.props.history.replace('/login')
+                setTimeout(()=>this.setState({redirect: true}),1000);
             }else{
                this.setState({message:"User already exist"})
             }
@@ -119,16 +121,11 @@ class signup extends React.Component{
                 this.setState({message:"Email is not valid(Enter proper email id)"})
             }  
         }
-        
-           
-       
-        
-       
-      
-    
     
 }
     render(){
+        if(this.state.redirect) return <Redirect to="/login" />;
+        
         return(
             <React.Fragment>
                 <br/>
