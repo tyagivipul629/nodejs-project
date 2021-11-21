@@ -14,6 +14,7 @@ import Search from './components/Search/search';
 import Test from './components/Test';
 import axios from 'axios';
 
+
 class App extends React.Component {
 
   constructor(props){
@@ -67,6 +68,7 @@ class App extends React.Component {
       <>
       <Navbar userid={this.state.userid} cartCount={this.state.cartCount} 
       notifCount={this.state.notifCount} unsetUser={this.unsetUser} />
+      
     <Switch>
       <Route exact path="/" render={(props)=>(<Home {...props} />)} />
       <Route exact path="/login" render={(props)=>(<Login {...props} setUser={this.setUser} />)} />

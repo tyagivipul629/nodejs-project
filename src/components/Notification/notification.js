@@ -1,97 +1,97 @@
-import React from  'react';
+// import React from  'react';
 
-class Notification extends React.Component {
+// class Notification extends React.Component {
 
-    constructor()
+//     constructor()
 
-    {
+//     {
 
-        super()
+//         super()
 
-        this.state = {notifications:[]}
+//         this.state = {notifications:[]}
 
-    }
+//     }
 
-    componentDidMount()
+//     componentDidMount()
 
-    {
+//     {
 
  
 
-        axios.get(http://localhost:5000/+usrid+"/notifications").then((res) => {
+//         axios.get(http://localhost:5000/+usrid+"/notifications").then((res) => {
 
-            this.setState({notifications:res.data})
+//             this.setState({notifications:res.data})
 
            
 
-        }).catch((err) => {
+//         }).catch((err) => {
 
-            console.log(err)
+//             console.log(err)
 
-        })
+//         })
 
-    }
+//     }
 
    
 
-    render(){
+//     render(){
 
-        return <React.Fragment>
+//         return <React.Fragment>
 
-            <form>
+//             <form>
 
-                <div style={{textAlign:"center"}}>
+//                 <div style={{textAlign:"center"}}>
 
-                {this.state.notifications.map((element) => {
+//                 {this.state.notifications.map((element) => {
 
-                    <table>
+//                     <table>
 
-                        <thead><tr><label><th>Notification order id</th></label><br/>
+//                         <thead><tr><label><th>Notification order id</th></label><br/>
 
-                        <th><label>Notification Text</label><br/></th></tr></thead>
+//                         <th><label>Notification Text</label><br/></th></tr></thead>
 
-                        <tr>
+//                         <tr>
 
-                            <td><p>{element.}</p></td>
+//                             <td><p>{element.}</p></td>
 
-                            <td><p>{element.}</p></td>
+//                             <td><p>{element.}</p></td>
 
-                            <td><button style={{backgroundColor:"orange",color:"white"}}>Mark as Read</button></td>
+//                             <td><button style={{backgroundColor:"orange",color:"white"}}>Mark as Read</button></td>
 
-                        </tr>
+//                         </tr>
 
-                        <tr>
+//                         <tr>
 
-                            <td><p>{element.}</p></td>
+//                             <td><p>{element.}</p></td>
 
-                            <td><p>{element.}</p></td>
+//                             <td><p>{element.}</p></td>
 
-                            <td><button
+//                             <td><button
 
-                            type="submit"
+//                             type="submit"
 
-                            className="btn btn-primary"
+//                             className="btn btn-primary"
 
-                            style={{backgroundColor:"orange",color:"white"}}>Mark as Read</button>
+//                             style={{backgroundColor:"orange",color:"white"}}>Mark as Read</button>
 
-                            </td>
+//                             </td>
 
-                        </tr>
+//                         </tr>
 
-                    </table>
+//                     </table>
 
-                     })}
+//                      })}
 
-                </div>
+//                 </div>
 
-            </form>
+//             </form>
 
-        </React.Fragment>
+//         </React.Fragment>
 
        
 
-    }
+//     }
 
-}
+// }
 
-export default Notification;
+// export default Notification;
