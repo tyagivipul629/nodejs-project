@@ -2,19 +2,29 @@ import React, { useState } from "react";
 
 const Items = ({ cartOfferPrice, productName, category, quantity,price}) => {
     const [quant,setQuant] = useState(quantity); 
-    
+    const am = quant*cartOfferPrice;
+    const [amt,setAmt] = useState(am);
+
+    // const [amt,setAmt] = useState(0);
+
+
     const plus = () => {
         setQuant(quant+1);
+        // setAmt(quant*cartOfferPrice);
+        console.log(quant );
     }
     const minus = () => {
         if(quant!=0){
         setQuant(quant-1);
+        // setAmt(quant*cartOfferPrice);
+        console.log(quant);
         }
-    }
 
+    }
+    
     return(
         <div className="container mx-6">
-            <div className="row">
+            <div className="row">{cartOfferPrice}
                 <div className="col">
                     <img src={'/assets/images/iphone.jpg'} alt="img" width="100px" height="100px"/>
                 </div>
@@ -37,7 +47,7 @@ const Items = ({ cartOfferPrice, productName, category, quantity,price}) => {
                             minus()
                         }}></i>
                         <div className="">
-                            <input type="number" placeholder="1" className="text-center" value={quant} min="0"/>
+                            <input type="number" placeholder="1" className="text-center ip" value={quant} min="0"/>
                         </div > 
                         <div>
                         <i className="fas fa-plus" onClick={ ()=>{
