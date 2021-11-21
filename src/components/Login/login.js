@@ -1,38 +1,9 @@
-/*import React from 'react';
-import { Redirect } from 'react-router-dom';
-
-class Login extends React.Component{
-    constructor(props){
-        super(props);
-        this.state={
-            redirect: false
-        }
-    }
-    componentDidMount(){
-        setTimeout(()=>{
-            localStorage.setItem('user','vipul');
-            localStorage.setItem('userid','1234');
-            this.props.setUser('vipul','1234');
-            this.setState({
-                redirect: true
-            })
-        },6000);
-    }
-    render(){
-        if(this.state.redirect) return <Redirect to="/" />
-        return(
-            <h1>Login</h1>
-        );
-    }
-}
-
-export default Login; */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './login.css';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
+import authToken from '../authToken';
 import axios from 'axios';
+
+const url="";
 
 class login extends React.Component {
     constructor(props) {
@@ -40,6 +11,8 @@ class login extends React.Component {
         this.state = {
             Email: "",
             Password: "",
+            message: "",
+            redirect: false
         }
     }
 
@@ -51,54 +24,74 @@ class login extends React.Component {
     }
 
 
-    LoginUser = (e) => {
+    loginUser = (e) => {
         e.preventDefault();
          if(this.state.Email!='' && this.state.Password!='')
         {
-            axios.get('./login.json').then(res=>{ 
-                 const temp=res.data.filter(elem=>elem.Email==this.state.Email&&elem.Password==this.state.Password);
-                if(temp.length==1)
-                {
-                    localStorage.setItem('username',this.state.Email);
-                    this.props.history.replace('/home');
-                    //this.props.LoginUser(this.state.Email);
+            /*axios.get('login.json').then(res=>{
+                //console.log(res.data);
+            })*/
+            axios.post(url+'/login',
+            {userEmail: this.state.Email, userPassword: this.state.Password},authToken())
+            .then(res=>{
+                if(res.data.status=="true"){
+                    localStorage.setItem('user',this.state.email);
+                    localStorage.setItem('userid',res.data.userid);
+                    localStorage.setItem('token',res.data.token);
+                    this.props.setUser(this.state.email,res.data.userid);
+                    this.setState({
+                        redirect: true
+                    })
                 }
                 else{
-                    alert("Either your Email or Password is incorrect");
-                } })
-                 
-         }
+                    alert("Wrong Username/Password!!");
+                }
+            })
+        }
          else{
-             alert("Both feild are mandatory")
+             alert("Both fields are mandatory")
          }
-
-
-
         
     }
 
 
     render() {
+        if(this.state.redirect) return <Redirect to="/" />;
         return (
             <React.Fragment>
-                <form onSubmit={this.UserLogin} class="alpha">
-                <b style={{"background-color":"green"}}><h2 class="user" ><i > WELCOME TO EKART &reg;</i></h2></b><br/>
-                    <div class="login-box" style={{ height: '300px', marginTop: '-60px' }}>
-                        <p class="login">USERNAME</p>
-                        <input type="text" name="Email" id="login1" placeholder="Enter : Email" value={this.state.Email} onChange={(e) => this.changeField(e)} required />
-                        <p class="login"> PASSWORD</p>
-                        <input type="password" name="Password" id="login1" placeholder="Enter : Password" value={this.state.Password} onChange={(e) => this.changeField(e)} required />
-                        
-                        <input type="submit" name="submit" value="login" class="login" onClick={this.LoginUser} />
-                        <span>
-                            <p><Link to='/signup'>Sign Up ?</Link>If you don't have Account</p>
-                        </span>
+                <div style={{width: '300px', margin: '70px auto', padding: '20px', border: '2px solid black', backgroundColor: 'rgba(0,0,0,0.4)'}}>
+                    <div className="mb-3" style={{display: 'flex', flexDirection: 'column',justifyContent: 'center', alignItems: 'center'}}>
+                        <img src={'/assets/images/user.jpg'} style={{height: '100px', width: '100px', borderRadius: '50%'}} />
+                        <h3>Login Here</h3>
                     </div>
-                </form>
-
+                    <div className="mb-3">
+                        <label for="inputEmail" className="form-label" style={{fontWeight: '600'}}>Email</label>
+                        <input type="email" className="form-control" name="Email"
+                        placeholder="Enter Email"
+                        onChange={this.changeField}
+                        value={this.state.Email} id="inputEmail" aria-describedby="emailHelp" />
+                        <div id="emailHelp" className="form-text">Don't Worry! Your email would be safe.</div>
+                    </div>
+                    <div className="mb-3">
+                        <label for="inputPass" className="form-label" style={{fontWeight: '600'}}>Password</label>
+                        <input type="password" className="form-control" name="Password"
+                        placeholder="Enter Password"
+                        onChange={this.changeField}
+                        value={this.state.Password} id="inputPass" />
+                    </div>
+                    <div className="mb-3" style={{display: 'flex', justifyContent: 'center'}}><button className="btn btn-primary" onClick={this.loginUser}>Login</button></div>
+                    <Link to="/signup" style={{textDecoration: 'none'}}>Register Here!</Link>
+                </div>
             </React.Fragment>
         )
     }
 }
 
 export default login;
+
+
+
+
+
+
+
