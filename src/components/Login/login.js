@@ -1,9 +1,8 @@
 import React from 'react';
 import {Link, Redirect} from 'react-router-dom';
-import authToken from '../authToken';
 import axios from 'axios';
 
-const url="";
+const url="http://10.85.92.138:8002";
 
 class login extends React.Component {
     constructor(props) {
@@ -28,11 +27,9 @@ class login extends React.Component {
         e.preventDefault();
          if(this.state.Email!='' && this.state.Password!='')
         {
-            /*axios.get('login.json').then(res=>{
-                //console.log(res.data);
-            })*/
+           
             axios.post(url+'/login',
-            {userEmail: this.state.Email, userPassword: this.state.Password},authToken())
+            {userEmail: this.state.Email, userPassword: this.state.Password})
             .then(res=>{
                 if(res.data.status=="true"){
                     localStorage.setItem('user',this.state.email);
