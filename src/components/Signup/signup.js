@@ -3,15 +3,16 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import axios from 'axios'
 import './signup.css'
+import authToken from '../authToken'
 
 class signup extends React.Component{
     constructor(){
         super();
         this.state = {
-            uname:"",
-            email:'',
-            phone:"",
-            password1:'',
+            userName:"",
+            userEmail:'',
+            userPhone:"",
+            userPassword:'',
             password2:'',
             message:'',
             textStyle:''
@@ -20,9 +21,17 @@ class signup extends React.Component{
     
     handlecall=(state)=>{
         console.log("method called")
-        console.log(state);
-        axios.post('http://localhost:5000/signup',state).then((res)=>{
-            console.log('added');
+        var body={userName:this.state.userName,userEmail:this.state.userEmail,userPassword:this.state.userPassword,userPhone:this.state.userPhone}
+        axios.post('http://10.85.92.138:8002/signup',body,authToken()).then((res)=>{
+            console.log(res);
+            if(res.data.status===true){
+                console.log('added');
+                this.setState({message:"Succesfully Signed Up"})
+                 this.props.history.replace('/login')
+            }else{
+               this.setState({message:"User already exist"})
+            }
+         
                 
 
         }).catch(()=>{
@@ -82,23 +91,18 @@ class signup extends React.Component{
             if(pass1!==pass2) return false
             else return true
         }
-        function success(){
-            setTimeout(function(){
-             console.log("signup")
-            },5000)
-        }
+       
         
-        if(this.state.email =='' || this.state.password1=='' || this.state.password2=='' || this.state.uname=='' || this.state.phone==''){
+        if(this.state.userEmail =='' || this.state.userPassword=='' || this.state.password2=='' || this.state.userName=='' || this.state.userPhone==''){
             this.setState({message:"All fields are mandatory", textStyle:"danger"})
         } 
        else{
-           if(validateEmail(this.state.email)){
-               if(validatePass(this.state.password1)){
-                   if(validateUname(this.state.uname)){
-                       if(confirmPass(this.state.password1,this.state.password2)){
-                        this.setState({message:"Succesfully Signed Up"})
-                          success()
-                          this.props.history.replace('/home');
+           if(validateEmail(this.state.userEmail)){
+               if(validatePass(this.state.userPassword)){
+                   if(validateUname(this.state.userName)){
+                       if(confirmPass(this.state.userPassword,this.state.password2)){
+                      this.handlecall(state)
+                       
                        }else{
                         this.setState({message:"Passwords are not matching"})
                        }
@@ -137,23 +141,23 @@ class signup extends React.Component{
                  <div class="card-header bg-transparent border-success"><center><h5 className="header">Ekart Application</h5></center></div>
                     <div className="card-body" >
     
-    <form  style={{position:'relative',left:'50px'}} onSubmit={this.handleSubmit} onClick={()=>{this.handlecall(this.state)}}>
+    <form  style={{position:'relative',left:'50px'}} onSubmit={this.handleSubmit} >
                   <b><h6 className="shaodow"><i>Leverage the benefits of registered users...</i></h6></b><br/>
                     <div className="form-group">
                         <label>Username:</label>
-                        <input style={{width:'40%'}} placeholder="First Name" className="form-control" name="uname" type="text" onChange={this.handleChange}/>
+                        <input style={{width:'40%'}} placeholder="First Name" className="form-control" name="userName" type="text" onChange={this.handleChange}/>
                     </div>
                     <div className="form-group ">
                         <label>Email Address:</label>
-                        <input className="input-lg" style={{width:'40%'}} placeholder="ex:abc@gmail.com" className="form-control" name="email" type="text" onChange={this.handleChange}/>
+                        <input className="input-lg" style={{width:'40%'}} placeholder="ex:abc@gmail.com" className="form-control" name="userEmail" type="text" onChange={this.handleChange}/>
                     </div>
                     <div className="form-group">
                         <label>Phone Number:</label>
-                        <input style={{width:'40%'}}  placeholder="ex:0123456789"className="form-control" name="phone" type="number" onChange={this.handleChange} maxLength="10"/>
+                        <input style={{width:'40%'}}  placeholder="ex:0123456789"className="form-control" name="userPhone" type="number" onChange={this.handleChange} maxLength="10"/>
                     </div>
                     <div className="form-group">
                         <label>Password:</label>
-                        <input style={{width:'40%'}}  placeholder="Aa@1"className="form-control" name="password1" type="password" onChange={this.handleChange}/>
+                        <input style={{width:'40%'}}  placeholder="Aa@1"className="form-control" name="userPassword" type="password" onChange={this.handleChange}/>
                     </div>
                     <div className="form-group">
                         <label>Confirm Password:</label>
@@ -173,7 +177,7 @@ class signup extends React.Component{
    
             </div>
         </div>
-        
+      
   
        
            
