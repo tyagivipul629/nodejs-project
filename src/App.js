@@ -13,7 +13,10 @@ import Orders from './components/Orders/orders';
 import Search from './components/Search/search';
 import Test from './components/Test';
 import axios from 'axios';
+import authToken from './components/authToken';
 
+
+const url='http://10.85.92.138:8002'
 
 class App extends React.Component {
 
@@ -27,7 +30,7 @@ class App extends React.Component {
   }
 
   fetchCartAndNotification=async(userid)=>{
-    const cartres=await axios.get(url+`${userid}/cartcount`);
+    const cartres=await axios.get(url+`/${userid}/cartcount`,authToken());
     
     this.setState({
       cartCount: cartres.data.CARTCOUNT,

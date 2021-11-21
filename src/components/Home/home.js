@@ -20,17 +20,17 @@ class Home extends React.Component{
 
     componentDidMount(){
         axios.get(url+'/deals',authToken()).then(res=>{
-            if(res.data.status=="true")
+            if(res.data.status==true)
                 this.setState({
-                    deals: res.data,
+                    deals: res.data.data,
                 })
         }).catch(err=>{
             console.log(err);
         })
 
-        axios.get(url+'/products').then(res=>{
+        axios.get(url+'/products',authToken()).then(res=>{
             this.setState({
-                otherProds: res.data
+                otherProds: res.data.data
             })
         }).catch(err=>{
             console.log(err);
@@ -63,7 +63,7 @@ class Home extends React.Component{
                 </div>
                 <h2 id="heading">Recommended Products</h2>
                 <div className="row" style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                    {this.state.recommended.length!==0?<DealItems items={this.state.recommended} />:<div></div>}
+                    {this.state.recommended.length!==0?<DealItems items={this.state.recommended} />:<div><h3 style={{textAlign: 'center'}}>No recommended products as of now</h3></div>}
                 </div>
                 <h2 id="heading">Other Products</h2>
                 <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>

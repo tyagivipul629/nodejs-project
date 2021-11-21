@@ -31,7 +31,7 @@ class login extends React.Component {
             axios.post(url+'/login',
             {userEmail: this.state.Email, userPassword: this.state.Password})
             .then(res=>{
-                if(res.data.status=="true"){
+                if(res.data.status==true){
                     localStorage.setItem('user',this.state.Email);
                     localStorage.setItem('userid',res.data.userid);
                     localStorage.setItem('token',res.data.token);

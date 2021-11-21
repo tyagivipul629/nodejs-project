@@ -74,7 +74,7 @@ class wishlist extends React.Component {
         return(
             <div className="container-fluid" style={{marginTop: '1rem'}}>
                 <div className="row">
-                    {wishListItem}
+                    {this.state.wishList.length==0?<h2 style={{textAlign: 'center'}}>Wishlist empty!!</h2>:wishListItem}
                 </div>
             </div>
 
