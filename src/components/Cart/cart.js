@@ -3,31 +3,38 @@ import "./cart.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Items from "./Items";
 import axios from "axios";
+import authToken from "../authToken"
 
-const cart = () => {
-    // const [user,setuser] = useState(null);
+const Cart = () => {
+    var userid = 1;
+    // localStorage.getItem("userid");
+    var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbWVlckBnbWFpbC5jb20iLCJpYXQiOjE2Mzc1MDIxMTR9.3-TdCZybCc4KAEHOqNETQ_nv-xGilADEGiL000Ftroc";
+    // localStorage.getItem("token");
+    const [user,setuser] = useState([]);
 
-    // useEffect(() = >{
-    //     async function fetchData(){
-    //         try {
-    //             const response =  await axios.get("");
-    //             setuser(response.data.cartdetails);
-    //         }catch (error){
-    //             console.log(error);
-    //         }
-    //     }
-    //     fetchData();
-    // },[]);
+    // authToken())
+    useEffect(() => {
+        async function fetchData(){
+            try{
+                const response = await axios.get(`http://10.85.92.138:8002/${userid}/cart`,{
+                    headers:{
+                        Authorization : "Bearer " + (token)
+                    }
+                })
+                setuser(response.data.data);
+            }catch(error){
+                console.log(error);
+            }
+        }
+        fetchData();
+    },[]);
 
-    // console.log(user);
-
-    // const [Item,setItem] = useState(user);
+    console.log(user);
 
 return (
-
     <div className="m-3">
-        
-        <h1 className="m-3">Shopping cart</h1>
+     
+        <h1 className="m-3">Shipping Cart</h1>
         
         {/* Heaader Row */}
         <div className="container">
@@ -60,19 +67,23 @@ return (
         </div>
 
         {/* products row */}
-        {/* <div className="mt-5 px-5">
+        <div className="mt-5 px-5">
             <hr/>
         </div>
 
         <div className="cart-items-container">
-            {item.map((curItem) => {
-                return <Items key ={curItem.displayName} {...curItem} />;
-            })}
-        </div> */}
+            {
+
+                // user.quantity
+                user.map((curItem) => {
+                    return <Items key ={curItem.displayName} {...curItem} />;
+                })
+            }
+        </div>
 
         {/* end products */}
 
-        <div className="px-5 mx-5">
+        <div className="px-5 m-5">
             <div className="d-flex flex-row-reverse">
                 <h4>Total Amount: 22000$</h4>
             </div>
@@ -87,4 +98,4 @@ return (
 );
 }
 
-export default cart;
+export default Cart;
