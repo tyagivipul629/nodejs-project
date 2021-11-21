@@ -28,14 +28,14 @@ class Home extends React.Component{
             console.log(err);
         })
 
-        // axios.get(url+'/products',authToken()).then(res=>{
-        //     this.setState({
-        //         otherProds: res.data.data
-        //     })
-        // }).catch(err=>{
-        //     console.log(err);
-        // })
-        //uncomment above 
+        axios.get(url+'/products',authToken()).then(res=>{
+            this.setState({
+                otherProds: res.data.data
+            })
+        }).catch(err=>{
+            console.log(err);
+        })
+        
 
         /*axios.get(url+'/recommendatons').then(res=>{
             this.setState({
