@@ -26,7 +26,7 @@ function Description(props)
         
         axios.get("http://10.85.92.138:8002/searchproduct/"+name,authToken()).then((res) => {
           // console.log(res.data)
-            setDescription({products:res.data[0]})
+            setDescription({products:res.data.data[0]})
             
             setR({r:res.data[0].avgRating})
             setG({gr:res.data[0].avgRating.reviews})
