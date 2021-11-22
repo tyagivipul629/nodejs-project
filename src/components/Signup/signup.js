@@ -26,12 +26,12 @@ class signup extends React.Component{
         var body={userName:this.state.userName,userEmail:this.state.userEmail,userPassword:this.state.userPassword,userPhone:this.state.userPhone}
         axios.post('http://10.85.92.138:8002/signup',body,authToken()).then((res)=>{
             console.log(res);
-            if(res.data.status==="true"){
+            if(res.data.status===true){
                 console.log('added');
                 this.setState({message:"Succesfully Signed Up"})
                 setTimeout(()=>this.setState({redirect: true}),1000);
             }else{
-               this.setState({message:"User already exist"})
+               this.setState({message:"User already exist OR Enter details Correctly"})
             }
          
                 
