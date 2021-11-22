@@ -12,7 +12,7 @@ function Description(props)
     const {name} = useParams()
     const [state,setDescription] = useState({products:[]})
     const [sta,setQunatity] = useState({quant:0})
-    const [st,setR] = useState({r:[]})
+    const [st,setR] = useState({r:{}})
     const [isDisplay,setDisplay] = useState(false)
     const [o,setOrders] = useState({orders:[]})
     const [f,setFeedback] = useState({feedback:""})
@@ -22,11 +22,11 @@ function Description(props)
 
     const loggedInUser = localStorage.getItem('userId')
     const effect =  useEffect(() => {
-      
+        //http://localhost:3000/searchproduct/:productname/details
         axios.get("http://10.85.92.138:8002/searchproduct/"+name,authToken()).then((res) => {
            
             setDescription({products:res.data})
-           // setR({r:res.data.reviews})
+            setR({r:res.data.avgRating.reviews})
            
         }).catch((err) => {
             console.log(err)
@@ -39,27 +39,19 @@ function Description(props)
         }).catch((err) => {
             console.log(err)
         })
-
-        axios.get("http://10.85.92.138:8002/reviews"+name,authToken()).then((res) => {
-            
-            setR({r:res.data.avgRating.reviews})
-           
-        }).catch((err) => {
-            console.log(err)
-        })
         
     },[])
     
     
-    var l = r.length
+    var l = st.r.reviews?.length
     var j
     var x = false
     var y = false
     var sum = 0
-    for(var t=0;t<r.length;t++) {
-        sum = sum + r[t].rating
+    for(var t=0;t<l;t++) {
+        sum = sum + st.r.reviews[t].rating
     }
-var avg=sum/r.length
+var avg=sum/l
 
     for(j=0;j<o.orders.length;j++)
     {
@@ -94,9 +86,7 @@ var avg=sum/r.length
         }
         return empty_stars
     }
-    function ratingChanged(newRating) {
-        setrate({rate:newRating})
-    }
+    
     console.log(r.rate)
 
 
@@ -162,7 +152,7 @@ var avg=sum/r.length
     {
         var reviewComments = f.feedback
         var rating
-        axios.post("http://10.85.92.138:8002/"+state.products.displayName+"/reviewproduct",{loggedInUser,reviewComments,rating:rating},authToken()).then((res)=> {
+        axios.post("http://10.85.92.138:8002/"+state.products.displayName+"/reviewproduct",{loggedInUser,reviewComments,rating:rt.rating},authToken()).then((res)=> {
             if(res.status == true) {
                 
                 alert("Review submitted Successfully")
@@ -221,9 +211,8 @@ var avg=sum/r.length
                                     <b>You save : </b>
                                     {state.products.discount}
                                 </p>
-                                <p>
-                                    <b> Deal Name : </b>
-                                    {state.products.deal}
+                                <p style={{color:"green"}}>
+                                    In Stock
                                 </p>
                                 <b>Quantity :</b>
                                 <input style={{width:"40px"}} type="number" name="quantity" id="quan" min="1" required onChange={get_quantity}></input>
@@ -239,7 +228,7 @@ var avg=sum/r.length
             </div>
             <div style={{padding:"0px 40px 10px 10px"}}>
              <h5 style={{color:"#728FCE"}}>Customer Reviews</h5>
-             {st.r.map((rev)=>{
+             {st.r.reviews.map((rev)=>{
                  return(
                      <>
                         <p>
@@ -248,7 +237,7 @@ var avg=sum/r.length
                             &nbsp; &nbsp;&nbsp;{rev.rating} out of 5
                         </p>
                         <p>By {rev.userId}</p>
-                        <p>{rev.comments}</p>
+                        <p>{rev.reviewComments}</p>
                         <hr></hr>
                     </>
                  )
