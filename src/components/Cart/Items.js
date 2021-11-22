@@ -43,14 +43,14 @@ const Items = ({ cartOfferPrice, productName, category, quantity,price}) => {
 
                 <div className="col">
                     <div className="add-minus-quantity text-center mt-4">
-                        <i className="fas fa-minus" onClick={ ()=>{
+                        <i className="fa fa-minus" onClick={ ()=>{
                             minus()
                         }}></i>
                         <div className="">
                             <input type="number" placeholder="1" className="text-center ip" value={quant} min="0"/>
                         </div > 
                         <div>
-                        <i className="fas fa-plus" onClick={ ()=>{
+                        <i className="fa fa-plus" onClick={ ()=>{
                             plus()
                         }}></i>
                         </div>

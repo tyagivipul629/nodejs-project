@@ -2,8 +2,8 @@ import React from  'react';
 class Notification extends React.Component {
     render(){
         return <React.Fragment>
-            <form>
-                <div style={{textAlign:"center"}}>
+            
+                <div style={{textAlign:"center", width: '1000px',margin: '0 auto'}}>
                     <table>
                         <div className="notification"/>
                         <thead><tr><label><th>Notification order id</th></label><br/>
@@ -24,7 +24,7 @@ class Notification extends React.Component {
                         </tr>
                     </table>
                 </div>
-            </form> 
+            
         </React.Fragment>
         
     }
