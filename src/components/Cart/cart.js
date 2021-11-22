@@ -6,30 +6,35 @@ import axios from "axios";
 import authToken from "../authToken"
 
 const Cart = () => {
-    var userid = 1;
-    // localStorage.getItem("userid");
-    var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbWVlckBnbWFpbC5jb20iLCJpYXQiOjE2Mzc1MDIxMTR9.3-TdCZybCc4KAEHOqNETQ_nv-xGilADEGiL000Ftroc";
-    // localStorage.getItem("token");
+    var userid = localStorage.getItem("userid");
+    
+    //var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbWVlckBnbWFpbC5jb20iLCJpYXQiOjE2Mzc1MDIxMTR9.3-TdCZybCc4KAEHOqNETQ_nv-xGilADEGiL000Ftroc";
+    
     const [user,setuser] = useState([]);
 
-    // authToken())
+    
     useEffect(() => {
         async function fetchData(){
             try{
-                const response = await axios.get(`http://10.85.92.138:8002/${userid}/cart`,{
-                    headers:{
-                        Authorization : "Bearer " + (token)
+                if(localStorage.getItem('token')!=null)
+                {const response = await axios.get(`http://10.85.92.138:8002/${userid}/cart`,authToken());
+                setuser(response.data.data);}
+                else{
+                    const items=JSON.parse(localStorage.getItem('items'));
+                    
+                    if(items!=null&items.length!=0){
+                        setuser(items);
                     }
-                })
-                setuser(response.data.data);
-            }catch(error){
+                    
+                }
+            }
+            catch(error){
                 console.log(error);
             }
         }
         fetchData();
     },[]);
 
-    console.log(user);
 
 return (
     <div className="m-3">
@@ -75,9 +80,10 @@ return (
             {
 
                 // user.quantity
+                user.length!=0?
                 user.map((curItem) => {
                     return <Items key ={curItem.displayName} {...curItem} />;
-                })
+                }):<h3>No Item available in cart right now</h3>
             }
         </div>
 

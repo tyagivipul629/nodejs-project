@@ -1,6 +1,6 @@
 .searchInputs{
     margin-top: 20px;
-    margin-left: 590px;
+    margin-left: 540px;
     display:flex;
     
 }
@@ -16,10 +16,10 @@
 }
 .dataResult {
     border-radius:5px;
-    margin-left: 590px;
+    margin-left: 440px;
     margin-top: 5px;
-    width: 300px;
-    height: 200px;
+    width: 500px;
+    height: 400px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     overflow: hidden;
@@ -27,9 +27,9 @@
     
   }
   
-  /* .dataResult::-webkit-scrollbar {
+  .dataResult::-webkit-scrollbar {
     display: none;
-  } */
+  } 
   
   .dataResult .dataItem {
     width: 100%;
