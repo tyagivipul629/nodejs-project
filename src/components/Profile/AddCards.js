@@ -117,6 +117,7 @@ class AddCards extends React.Component {
         let color = this.state.msgColor ? "green" : "red"
         return(
             <>
+            <center>
             <div className="container" style={{marginLeft:"5rem"}}>
             <h2>Add New Card</h2>
             <table>
@@ -156,6 +157,7 @@ class AddCards extends React.Component {
                 </tbody>
             </table>
             </div>
+            </center>
         </>
         )
     }

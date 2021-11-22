@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import Address from "./address";
 import Cards from "./cards";
+import 'bootstrap'
 // import { Link } from "react-router-dom";
 
 const userId = localStorage.getItem('userId')
@@ -82,36 +83,41 @@ class Profile extends React.Component {
         let color = this.state.msgColor ? "green" : "red"
         return(
             <>
-            <div className="container" style={{marginLeft:"4rem"}}>
-            <h2>User Details</h2>
+            <div className="container" style={{marginLeft:"4rem",marginTop:"2rem"}}>
+            <div className="col-md-4 offset-4">
+                   <div className="card" className="card border-success mb-3" style={{width: "28rem"}}>
+                   <div class="card-header bg-transparent border-success"><center>Ekart Application</center></div>
+                      <div className="card-body" >
+   
+            <h5><center>Profile Update</center></h5>
             <table>
                 <tbody>
                 <tr>
                     <td>
-                        <form  style={{width:"20rem"}}>
+                        <form  style={{width:"20rem"}} >
                             <div>
                                  <label htmlFor="user">Name:</label>
-                                 <input type="text" id="user" name="name" value={this.state.userName} onChangeCapture={this.changeState} style={{float:"right"}}/>
+                                 <input type="text" id="user" name="name" value={this.state.userName} onChangeCapture={this.changeState} style={{float:"right"}} placeholder="Username"/>
                                  <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.userNameMsg}</p>
                              </div>
                              <div>
                                  <label htmlFor="password">Password:</label>
-                                 <input type="password" id="password" name="password" value={this.state.userPassword} onChange={this.changeState} style={{float:"right"}}/>
+                                 <input type="password" id="password" name="password" value={this.state.userPassword} onChange={this.changeState} style={{float:"right"}} placeholder="Password"/>
                                  <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.userPasswordMsg}</p>
                              </div>
                              <div style={{marginBottom:"1rem"}}>
                                  <label htmlFor="email">Email Id:</label>
-                                 <input type="email" id="email" name="emailId" value={this.state.userEmail} style={{float:"right"}}/>
+                                 <input type="email" id="email" name="emailId" value={this.state.userEmail} style={{float:"right"}} placeholder="Email"/>
                                  {/* <p className="message">{this.state.emailIdMsg}</p> */}
                              </div>
                              <div style={{marginBottom:"1rem"}}>
                                  <label htmlFor="mobile">Mobile No:</label>
-                                 <input type="number" id="mobile" name="mobileNo" value={this.state.userPhone} onChange={this.changeState} style={{float:"right"}}/>
+                                 <input type="number" id="mobile" name="mobileNo" value={this.state.userPhone} onChange={this.changeState} style={{float:"right"}} placeholder="Phone"/>
                                  <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.userPhoneMsg}</p>
                              </div>
                              <div className="buttons">
-                             <button className="submit" onClick={this.submitForm} style={{marginLeft:"2rem"}}>Save Changes</button>
-                             <button className="cancel" onClick={this.resetState} style={{marginLeft:"2rem"}}>Cancel</button>
+                             <button className="submit" className="btn btn-success" onClick={this.submitForm} style={{marginLeft:"2rem"}}>Save Changes</button>
+                             <button className="btn btn-danger"  onClick={this.resetState} style={{marginLeft:"2rem"}}>Cancel</button>
                              <p className="register" style={{color:color}}>{this.state.submitMsg}</p>
                             </div>
                         </form>
@@ -121,7 +127,7 @@ class Profile extends React.Component {
                 </tbody>
             </table>
 
-            </div>
+            </div> </div> </div> </div>
         <Address email={this.state.userEmail}></Address>
         <Cards email={this.state.userEmail}></Cards>
         </>

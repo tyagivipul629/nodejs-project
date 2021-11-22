@@ -40,11 +40,13 @@ class Cards extends React.Component {
     render(){
         console.log(this.state.cards)
         return(
+           
             <div className="container-fluid m-3" style={{marginLeft:"5rem"}}>
+               
                 <div className="row">
                     <h2 className="mx-5">Cards Details</h2>
                     {this.state.cards.map((object,index) =>(    
-                        <div className="col-sm-3 bg-light px-4 py-5 m-5 border" key={index}>
+                       <div className="col-sm-3 bg-light px-4 py-5 m-5 border" key={index}>
                             <p>Card Holder: {object.nameOnCard} </p>
                             <p>Card Number: {object.cardNumber} </p>
                             <p>Expiry Date: {`${object.expiryMonth}/${object.expiryYear}`}</p>
@@ -52,13 +54,16 @@ class Cards extends React.Component {
                             <button style={{marginRight:"2vw",marginBottom:"1vh"}}>Modify</button>
                             <button value={object.cardNumber} onClick={this.deletecards}>Delete</button>
                         </div>
+                       
                     ))}
                     <div className="col-sm-3 bg-light p-5 m-5 border">
                         <h4>Add New card</h4>
                         <Link to={`/${this.state.emailId}/card/add`}><button style={{margin:"5vw 10vh",}}>+</button></Link>
                     </div>
                 </div>
-            </div>
+            </div> 
+            
+
         )
     }
 }
