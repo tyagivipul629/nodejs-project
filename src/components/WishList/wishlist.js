@@ -21,10 +21,11 @@ class wishlist extends React.Component {
             userid: userid
         },()=>{
             axios.get(url+`/${userid}/wishlist`,authToken()).then(res=>{
-                const wishlist=res.data.data[0].wishlist;
+                if(res.data.data.length!=0)
+                {const wishlist=res.data.data[0].wishlist;
                 this.setState({
                     wishList: wishlist
-                })
+                })}
             })
         })
         
