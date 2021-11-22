@@ -6,11 +6,27 @@ import axios from "axios";
 import authToken from "../authToken"
 
 const Cart = () => {
+
+    function myCart(data){
+
+        // alert(data);
+        
+        let userTo = user.filter((element,index) => {
+            return ((element._id) !== data);
+        })
+        setuser(userTo);
+        
+
+    }
+
+    // function myCart1(data){
+    //     alert('g')
+    // }
+
     var userid = localStorage.getItem("userid");
-    
-    //var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbWVlckBnbWFpbC5jb20iLCJpYXQiOjE2Mzc1MDIxMTR9.3-TdCZybCc4KAEHOqNETQ_nv-xGilADEGiL000Ftroc";
-    
+    var token = localStorage.getItem("token");
     const [user,setuser] = useState([]);
+    var amt =9000;
 
     
     useEffect(() => {
@@ -78,20 +94,20 @@ return (
 
         <div className="cart-items-container">
             {
-
                 // user.quantity
                 user.length!=0?
                 user.map((curItem) => {
                     return <Items key ={curItem.displayName} {...curItem} />;
                 }):<h3>No Item available in cart right now</h3>
             }
+            
         </div>
 
         {/* end products */}
 
         <div className="px-5 m-5">
             <div className="d-flex flex-row-reverse">
-                <h4>Total Amount: 22000$</h4>
+                <h4>Total Amount: Rs{amt}</h4>
             </div>
 
             <div className="d-flex flex-row-reverse">

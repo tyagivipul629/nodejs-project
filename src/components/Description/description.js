@@ -18,7 +18,7 @@ function Description(props)
     const [f,setFeedback] = useState({feedback:""})
     const [r,setrate] = useState({rate:0})
     const [rt,setRt] = useState({rating:5})
-    //const [g,setG] = useState({gr:{}})
+    const [g,setG] = useState({gr:[]})
     
 
     const loggedInUser = localStorage.getItem('userId')
@@ -29,7 +29,7 @@ function Description(props)
             setDescription({products:res.data[0]})
             
             setR({r:res.data[0].avgRating})
-            //setG({gr:r.reviews})
+            setG({gr:res.data[0].avgRating.reviews})
            
         }).catch((err) => {
             console.log(err)
@@ -220,7 +220,7 @@ var avg=sum/l
             <div style={{padding:"0px 40px 10px 10px"}}>
              <h5 style={{color:"#728FCE"}}>Customer Reviews</h5>
              
-             {gr.map((rev)=>{
+             {g.gr.map((rev)=>{
                  return(
                      <>
                         <p>
