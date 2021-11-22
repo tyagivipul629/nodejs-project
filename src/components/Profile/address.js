@@ -14,7 +14,7 @@ class Address extends React.Component {
 
     deleteAddress = (e) =>{
         console.log(e.target.value)
-        axios.get(`http://localhost:5000/${this.state.emailId}/address/${e.target.value}/delete`)
+        axios.get(`http://10.85.92.138:8002/${this.state.emailId}/address/${e.target.value}/delete`)
         .then((response) =>{
             console.log(response.data)
             this.setState({address: response.data})

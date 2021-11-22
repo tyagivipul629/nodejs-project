@@ -5,7 +5,7 @@ import Login from './components/Login/login';
 import Signup from './components/Signup/signup';
 import Description from './components/Description/description';
 import Notification from './components/Notification/notification';
-import Cart from './components/Cart/Cart';
+import Cart from './components/Cart/cart';
 import WishList from './components/WishList/wishlist';
 import Profile from './components/Profile/profile';
 import Navbar from './components/Navbar/navbar';
