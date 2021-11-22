@@ -107,7 +107,7 @@ return (
 
         <div className="px-5 m-5">
             <div className="d-flex flex-row-reverse">
-                <h4>Total Amount: Rs{amt}</h4>
+                <h4>Total Amount: Calculating ...</h4>
             </div>
 
             <div className="d-flex flex-row-reverse">
