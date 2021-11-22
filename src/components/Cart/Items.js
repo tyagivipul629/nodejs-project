@@ -17,10 +17,8 @@ const Items = (props) => {
     console.log(p + s + q + c);
     let data = props._id;
     console.log(props._id);
-    var userid = 1;
-    // localStorage.getItem("userid");
-    var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbWVlckBnbWFpbC5jb20iLCJpYXQiOjE2Mzc1MDIxMTR9.3-TdCZybCc4KAEHOqNETQ_nv-xGilADEGiL000Ftroc";
-    // localStorage.getItem("token");
+    var userid = localStorage.getItem("userid");
+    var token = localStorage.getItem("token");
     const [user,setuser] = useState([]);
 
             async function removeItem(){        

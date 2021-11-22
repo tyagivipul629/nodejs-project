@@ -23,12 +23,10 @@ const Cart = () => {
     //     alert('g')
     // }
 
-    var userid = 1;
-    // localStorage.getItem("userid");
-    var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbWVlckBnbWFpbC5jb20iLCJpYXQiOjE2Mzc1MDIxMTR9.3-TdCZybCc4KAEHOqNETQ_nv-xGilADEGiL000Ftroc";
-    // localStorage.getItem("token");
+    var userid = localStorage.getItem("userid");
+    var token = localStorage.getItem("token");
     const [user,setuser] = useState([]);
-  
+    var amt =9000;
 
     // authToken())
     useEffect(() => {
@@ -105,7 +103,7 @@ return (
 
         <div className="px-5 m-5">
             <div className="d-flex flex-row-reverse">
-                <h4>Total Amount: 22000$</h4>
+                <h4>Total Amount: Rs{amt}</h4>
             </div>
 
             <div className="d-flex flex-row-reverse">
