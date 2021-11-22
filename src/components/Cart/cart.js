@@ -6,11 +6,29 @@ import axios from "axios";
 import authToken from "../authToken"
 
 const Cart = () => {
+
+    function myCart(data){
+
+        // alert(data);
+        
+        let userTo = user.filter((element,index) => {
+            return ((element._id) !== data);
+        })
+        setuser(userTo);
+        
+
+    }
+
+    // function myCart1(data){
+    //     alert('g')
+    // }
+
     var userid = 1;
     // localStorage.getItem("userid");
     var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhbWVlckBnbWFpbC5jb20iLCJpYXQiOjE2Mzc1MDIxMTR9.3-TdCZybCc4KAEHOqNETQ_nv-xGilADEGiL000Ftroc";
     // localStorage.getItem("token");
     const [user,setuser] = useState([]);
+  
 
     // authToken())
     useEffect(() => {
@@ -29,7 +47,6 @@ const Cart = () => {
         fetchData();
     },[]);
 
-    console.log(user);
 
 return (
     <div className="m-3">
@@ -73,12 +90,15 @@ return (
 
         <div className="cart-items-container">
             {
-
                 // user.quantity
                 user.map((curItem) => {
-                    return <Items key ={curItem.displayName} {...curItem} />;
+                    return <Items key ={curItem.displayName} {...curItem} 
+                    // cartUpdates={cartUpdate} 
+                    alert = {myCart}
+                    />;
                 })
             }
+            
         </div>
 
         {/* end products */}
