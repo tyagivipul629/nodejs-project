@@ -5,12 +5,12 @@ import Login from './components/Login/login';
 import Signup from './components/Signup/signup';
 import Description from './components/Description/description';
 import Notification from './components/Notification/notification';
-import Cart from './components/Cart/Cart';
+import Cart from './components/Cart/cart';
 import WishList from './components/WishList/wishlist';
 import Profile from './components/Profile/profile';
 import Navbar from './components/Navbar/navbar';
 import Orders from './components/Orders/orders';
-import Search from './components/Search/search';
+import Running from './components/Search/Running';
 import Test from './components/Test';
 import axios from 'axios';
 import authToken from './components/authToken';
@@ -26,7 +26,8 @@ class App extends React.Component {
     this.state={
       username: '',
       userid: '',
-      cartCount: 0
+      cartCount: 0,
+      redirect: false
     }
   }
 
@@ -34,7 +35,7 @@ class App extends React.Component {
     const cartres=await axios.get(url+`/${userid}/cartcount`,authToken());
     
     this.setState({
-      cartCount: cartres.data.CARTCOUNT,
+      cartCount: this.state.cartCount+cartres.data.CARTCOUNT,
       userid: userid
     })
   }
@@ -56,9 +57,7 @@ class App extends React.Component {
   }
 
   unsetUser=()=>{
-    localStorage.removeItem('user');
-    localStorage.removeItem('userid');
-    localStorage.removeItem('token');
+    
     this.setState({
       userid: ''
     })
@@ -83,12 +82,13 @@ class App extends React.Component {
       <Route exact path="/login" render={(props)=>(<Login {...props} setUser={this.setUser} />)} />
       <Route exact path="/signup" render={(props)=>(<Signup {...props} />)} />
       <Route exact path="/description/:name" render={(props)=>(<Description {...props} />)} />
-      <Route exact path="/cart" render={(props)=>(<Cart {...props} />)} />
-      <Route exact path="/search" render={(props)=>(<Search {...props} />)} />
+      <Route exact path="/Cart" render={(props)=>(<Cart {...props} />)} />
+      <Route exact path="/search" render={(props)=>(<Running {...props} />)} />
       <Route exact path="/notification" render={(props)=>(<Notification {...props} />)} />
       <Route exact path="/wishlist" render={(props)=>(<WishList {...props} />)} />
       <Route exact path="/profile" render={(props)=>(<Profile {...props} />)} />
       <Route exact path="/orders" render={(props)=>(<Orders {...props} />)} />
+      <Route exact path="/notifications" render={(props)=>(<Notification {...props} />)} />
       <Route exact path="/test" component={Test} />
     </Switch>
     </>

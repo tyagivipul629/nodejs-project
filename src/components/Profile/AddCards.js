@@ -1,20 +1,22 @@
 import axios from "axios";
 import React from "react";
+import authToken from "../authToken";
 // import { Link } from "react-router-dom";
 
-
+const userId = localStorage.getItem('userId')
 class AddCards extends React.Component {
+    
     constructor(props) {
         super(props)
         this.state = {
             emailId:this.props.match.params.email,
             cardNumber: "",
-            nameOnCard:"",
+            nameOnTheCard:"",
             expiryDate:"",
             expiryMonth:"",
             expiryYear:"",
             cardNumberMsg:"",
-            nameOnCardMsg:"",
+            nameOnTheCardMsg:"",
             expiryDateMsg:"",
             submitMsg:"",
             msgColor:false,
@@ -70,13 +72,13 @@ class AddCards extends React.Component {
         e.preventDefault()
         if(this.state.cardNumber.length === 16 && this.luhnCheck(this.state.cardNumber)){
             // console.log("Valid No.")
-            if(this.state.nameOnCard){
+            if(this.state.nameOnTheCard){
                 // console.log("Correct name")
                 if(this.state.expiryDate && this.expiryCheck(this.state.expiryMonth,this.state.expiryYear)){
                     // console.log("Valid Date");
-                    var body={cardNumber:this.state.cardNumber,nameOnCard:this.state.nameOnCard,expiryMonth:this.state.expiryMonth,expiryYear:this.state.expiryYear}
+                    var body={cardNumber:this.state.cardNumber,nameOnTheCard:this.state.nameOnTheCard,expiryMonth:this.state.expiryMonth,expiryYear:this.state.expiryYear}
                     console.log(body)
-                            axios.post(`http://localhost:5000/${this.state.emailId}/card/add`,body)
+                            axios.post(`http://10.85.92.138:8002/${userId}/card/add`,body,authToken())
 		                    .then((response) =>{ 
                                 this.setState({submitMsg:"Changes Saved",msgColor:true})   
                             }).catch(() =>{
@@ -115,6 +117,7 @@ class AddCards extends React.Component {
         let color = this.state.msgColor ? "green" : "red"
         return(
             <>
+            <center>
             <div className="container" style={{marginLeft:"5rem"}}>
             <h2>Add New Card</h2>
             <table>
@@ -129,8 +132,8 @@ class AddCards extends React.Component {
                              </div>
                              <div>
                                  <label htmlFor="nameOnCard">Card Holder:</label>
-                                 <input type="text" id="nameOnCard" name="nameOnCard" value={this.state.nameOnCard} onChange={this.changeState} style={{float:"right"}}/>
-                                 <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.nameOnCardMsg}</p>
+                                 <input type="text" id="nameOnCard" name="nameOnTheCard" value={this.state.nameOnTheCard} onChange={this.changeState} style={{float:"right"}}/>
+                                 <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.nameOnTheCardMsg}</p>
                              </div>
                              <div style={{marginBottom:"1rem"}}>
                                  <label htmlFor="expiryDate">Expiry Date:</label>
@@ -154,6 +157,7 @@ class AddCards extends React.Component {
                 </tbody>
             </table>
             </div>
+            </center>
         </>
         )
     }

@@ -2,20 +2,22 @@ import axios from "axios";
 import React from "react";
 import Address from "./address";
 import Cards from "./cards";
+import 'bootstrap'
 // import { Link } from "react-router-dom";
 
-
+const userId = localStorage.getItem('userId')
 class Profile extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            name: "",
-            password:"",
-            emailId:this.props.match.params.email,
-            mobileNo:null,
-            nameMsg:"",
-            passwordMsg:"",
-            mobileNoMsg:"",
+            userName: "",
+            userPassword:"",
+            //userId:this.props.match.params.userId,
+            userEmail:"",
+            userPhone:null,
+            userNameMsg:"",
+            userPasswordMsg:"",
+            userPhoneMsg:"",
             submitMsg:"",
             msgColor:false,
         }
@@ -29,7 +31,7 @@ class Profile extends React.Component {
     resetState = (e) =>{
         e.preventDefault()
         console.log("reset");
-        axios.get(`http://localhost:5000/user/${this.state.emailId}`)
+        axios.get(`http://10.85.92.138:8002/user/${userId}`)
         .then((response) =>{
             this.setState({name: response.data.name, password: response.data.password, mobileNo:response.data.mobileNo, nameMsg:"", passwordMsg:"", mobileNoMsg:"", submitMsg:""})
         }).catch( error =>{
@@ -39,13 +41,13 @@ class Profile extends React.Component {
 
     submitForm = (e) =>{
         e.preventDefault()
-        if(/^[a-zA-Z]+[a-zA-Z]+$/.test(this.state.name)){
+        if(/^[a-zA-Z]+[a-zA-Z]+$/.test(this.state.userName)){
             console.log("yes");
-            if(/[a-z]+/.test(this.state.password) && /[A-Z]+/.test(this.state.password) && /[0-9]+/.test(this.state.password) && /[*@!#%&()^~{}]+/.test(this.state.password)){
+            if(/[a-z]+/.test(this.state.userPassword) && /[A-Z]+/.test(this.state.userPassword) && /[0-9]+/.test(this.state.userPassword) && /[*@!#%&()^~{}]+/.test(this.state.userPassword)){
                 console.log("pass");
-                if(this.state.mobileNo.length === 10){
-                            var body={name:this.state.name,mobileNo:this.state.mobileNo,emailId:this.state.emailId,password:this.state.password}
-                            axios.post(`http://localhost:5000/${this.state.emailId}/update`,body)
+                if(this.state.userPhone.length === 10){
+                            var body={userName:this.state.userName,userPhone:this.state.userPhone,userEmail:this.state.userEmail,userPassword:this.state.userPassword}
+                            axios.post(`http://10.85.92.138:8002/${userId}/updateprofile`,body)
 		                    .then((response) =>{ 
                                 this.setState({submitMsg:"Changes Saved",msgColor:true})   
                             }).catch(() =>{
@@ -64,11 +66,11 @@ class Profile extends React.Component {
     }
 
     componentDidMount(){
-        console.log(this.state.emailId);
-        axios.get(`http://localhost:5000/user/${this.state.emailId}`)
+        console.log(this.state.userEmail);
+        axios.get(`http://10.85.92.138:8002/user/${this.state.userEmail}`)
         .then((response) =>{
             console.log(response);
-            this.setState({name: response.data.name, emailId:response.data.emailId, password: response.data.password, mobileNo: response.data.mobileNo})
+            this.setState({userName: response.data.userName, userEmail:response.data.userEmail, userPassword: response.data.userPassword, userPhone: response.data.userPhone})
         })
         .catch((err) =>{
             console.log("something wrong")
@@ -81,36 +83,41 @@ class Profile extends React.Component {
         let color = this.state.msgColor ? "green" : "red"
         return(
             <>
-            <div className="container" style={{marginLeft:"4rem"}}>
-            <h2>User Details</h2>
+            <div className="container" style={{marginLeft:"4rem",marginTop:"2rem"}}>
+            <div className="col-md-4 offset-4">
+                   <div className="card" className="card border-success mb-3" style={{width: "28rem"}}>
+                   <div class="card-header bg-transparent border-success"><center>Ekart Application</center></div>
+                      <div className="card-body" >
+   
+            <h5><center>Profile Update</center></h5>
             <table>
                 <tbody>
                 <tr>
                     <td>
-                        <form  style={{width:"20rem"}}>
+                        <form  style={{width:"20rem"}} >
                             <div>
                                  <label htmlFor="user">Name:</label>
-                                 <input type="text" id="user" name="name" value={this.state.name} onChangeCapture={this.changeState} style={{float:"right"}}/>
-                                 <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.nameMsg}</p>
+                                 <input type="text" id="user" name="name" value={this.state.userName} onChangeCapture={this.changeState} style={{float:"right"}} placeholder="Username"/>
+                                 <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.userNameMsg}</p>
                              </div>
                              <div>
                                  <label htmlFor="password">Password:</label>
-                                 <input type="password" id="password" name="password" value={this.state.password} onChange={this.changeState} style={{float:"right"}}/>
-                                 <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.passwordMsg}</p>
+                                 <input type="password" id="password" name="password" value={this.state.userPassword} onChange={this.changeState} style={{float:"right"}} placeholder="Password"/>
+                                 <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.userPasswordMsg}</p>
                              </div>
                              <div style={{marginBottom:"1rem"}}>
                                  <label htmlFor="email">Email Id:</label>
-                                 <input type="email" id="email" name="emailId" value={this.state.emailId} disabled readOnly style={{float:"right"}}/>
+                                 <input type="email" id="email" name="emailId" value={this.state.userEmail} style={{float:"right"}} placeholder="Email"/>
                                  {/* <p className="message">{this.state.emailIdMsg}</p> */}
                              </div>
                              <div style={{marginBottom:"1rem"}}>
                                  <label htmlFor="mobile">Mobile No:</label>
-                                 <input type="number" id="mobile" name="mobileNo" value={this.state.mobileNo} onChange={this.changeState} style={{float:"right"}}/>
-                                 <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.mobileNoMsg}</p>
+                                 <input type="number" id="mobile" name="mobileNo" value={this.state.userPhone} onChange={this.changeState} style={{float:"right"}} placeholder="Phone"/>
+                                 <p className="message" style={{color:color,marginTop:"1rem"}}>{this.state.userPhoneMsg}</p>
                              </div>
                              <div className="buttons">
-                             <button className="submit" onClick={this.submitForm} style={{marginLeft:"2rem"}}>Save Changes</button>
-                             <button className="cancel" onClick={this.resetState} style={{marginLeft:"2rem"}}>Cancel</button>
+                             <button className="submit" className="btn btn-success" onClick={this.submitForm} style={{marginLeft:"2rem"}}>Save Changes</button>
+                             <button className="btn btn-danger"  onClick={this.resetState} style={{marginLeft:"2rem"}}>Cancel</button>
                              <p className="register" style={{color:color}}>{this.state.submitMsg}</p>
                             </div>
                         </form>
@@ -120,9 +127,9 @@ class Profile extends React.Component {
                 </tbody>
             </table>
 
-            </div>
-        <Address email={this.state.emailId}></Address>
-        <Cards email={this.state.emailId}></Cards>
+            </div> </div> </div> </div>
+        <Address email={this.state.userEmail}></Address>
+        <Cards email={this.state.userEmail}></Cards>
         </>
         )
     }

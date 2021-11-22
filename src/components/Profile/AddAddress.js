@@ -2,12 +2,13 @@ import axios from "axios";
 import React from "react";
 // import { Link } from "react-router-dom";
 
-
+const userId = localStorage.getItem('userId')
 class AddAddress extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            emailId:this.props.match.params.email,
+           // emailId:this.props.match.params.email,
+            emailId:"",
             address: "",
             city:"",
             state:"",
@@ -40,7 +41,7 @@ class AddAddress extends React.Component {
                 //condition for State
                 if(this.state.phoneNumber && this.state.phoneNumber.length === 10){
                             var body={address:this.state.address,state:this.state.state,city:this.state.city,pinCode:this.state.pinCode,phoneNumber:this.state.phoneNumber}
-                            axios.post(`http://localhost:5000/${this.state.emailId}/address/add`,body)
+                            axios.post(`http://10.85.92.138:8002/${userId}/address/add`,body)
 		                    .then((response) =>{ 
                                 this.setState({submitMsg:"Changes Saved",msgColor:true})   
                             }).catch(() =>{

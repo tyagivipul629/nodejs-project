@@ -1,6 +1,12 @@
 import React from 'react';
 
 class Navbar extends React.Component{
+    logoutUser=()=>{
+        localStorage.removeItem('user');
+        localStorage.removeItem('userid');
+        localStorage.removeItem('token');
+        this.props.unsetUser();
+    }
     render(){
         console.log(this.props);
         return(
@@ -20,18 +26,21 @@ class Navbar extends React.Component{
                         <li className="nav-item active">
                             <a className="nav-link" href="/signup"><i className="fa fa-user-plus"></i>Signup</a>
                         </li>
-                        <li className="nav-item active">
+                        {this.props.userid==''&&<li className="nav-item active">
                             <a className="nav-link" href="/login"><i className="fa fa-sign-in"></i>Login</a>
+                        </li>}
+                        {this.props.userid&&<>
+                        <li className="nav-item active">
+                            <a className="nav-link" href="/orders"><i className="fa fa-first-order"></i>My Orders</a>
+                        </li>
+                        <li className="nav-item active">
+                            <a className="nav-link" href="/Cart"><i className="fa fa-shopping-cart"></i>Cart<span style={{padding: '3px',backgroundColor: 'red',color: 'white',marginLeft: '2px'}}>{this.props.cartCount}</span></a>
                         </li>
                         <li className="nav-item active">
                             <a className="nav-link" href="/search"><i className="fa fa-search"></i>Search</a>
                         </li>
                         <li className="nav-item active">
-                            <a className="nav-link" href="/Cart"><i className="fa fa-shopping-cart"></i>Cart<span style={{padding: '3px',backgroundColor: 'red',color: 'white',marginLeft: '2px'}}>{this.props.cartCount}</span></a>
-                        </li>
-                        {this.props.userid&&<>
-                        <li className="nav-item active">
-                            <a className="nav-link" href="/orders"><i className="fa fa-first-order"></i>My Orders</a>
+                            <a className="nav-link" href="/notifications"><i className="fa fa-bell"></i>Notifications <span style={{padding: '3px', backgroundColor: 'red',color: 'white'}}>2</span></a>
                         </li>
                         <li className="nav-item active">
                             <a className="nav-link" href="/profile"><i className="fa fa-user"></i>Profile</a>
@@ -42,7 +51,7 @@ class Navbar extends React.Component{
                         </>}
                     </ul>
                     {this.props.userid!=''&&<form className="d-flex">
-        <button class="btn btn-outline-success" type="submit" onClick={this.props.unsetUser}><i className="fa fa-sign-out"></i>Logout</button>
+        <button class="btn btn-outline-success" type="submit" onClick={this.logoutUser}><i className="fa fa-sign-out"></i>Logout</button>
       </form>}
                 </div>
                 </div>

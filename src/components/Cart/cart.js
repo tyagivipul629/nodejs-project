@@ -28,17 +28,23 @@ const Cart = () => {
     const [user,setuser] = useState([]);
     var amt =9000;
 
-    // authToken())
+    
     useEffect(() => {
         async function fetchData(){
             try{
-                const response = await axios.get(`http://10.85.92.138:8002/${userid}/cart`,{
-                    headers:{
-                        Authorization : "Bearer " + (token)
+                if(localStorage.getItem('token')!=null)
+                {const response = await axios.get(`http://10.85.92.138:8002/${userid}/cart`,authToken());
+                setuser(response.data.data);}
+                else{
+                    const items=JSON.parse(localStorage.getItem('items'));
+                    
+                    if(items!=null&items.length!=0){
+                        setuser(items);
                     }
-                })
-                setuser(response.data.data);
-            }catch(error){
+                    
+                }
+            }
+            catch(error){
                 console.log(error);
             }
         }
@@ -89,12 +95,10 @@ return (
         <div className="cart-items-container">
             {
                 // user.quantity
+                user.length!=0?
                 user.map((curItem) => {
-                    return <Items key ={curItem.displayName} {...curItem} 
-                    // cartUpdates={cartUpdate} 
-                    alert = {myCart}
-                    />;
-                })
+                    return <Items key ={curItem.displayName} {...curItem} />;
+                }):<h3>No Item available in cart right now</h3>
             }
             
         </div>
