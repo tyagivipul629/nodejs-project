@@ -2,7 +2,7 @@
 import React, { useState,useEffect } from 'react'
 import { useParams} from 'react-router-dom'
 import axios from 'axios'
-import { useHistory } from "react-router-dom";
+
 import Rater from './rating.js'
 
 import authToken from '../authToken'
@@ -10,7 +10,7 @@ function Description(props)
 {
     
     const {name} = useParams()
-    const [state,setDescription] = useState({products:[]})
+    const [state,setDescription] = useState({products:{}})
     const [sta,setQunatity] = useState({quant:0})
     const [st,setR] = useState({r:{}})
     const [isDisplay,setDisplay] = useState(false)
@@ -18,32 +18,31 @@ function Description(props)
     const [f,setFeedback] = useState({feedback:""})
     const [r,setrate] = useState({rate:0})
     const [rt,setRt] = useState({rating:5})
-    const history = useHistory();
+    //const [g,setG] = useState({gr:{}})
+    
 
     const loggedInUser = localStorage.getItem('userId')
     const effect =  useEffect(() => {
-        //http://localhost:3000/searchproduct/:productname/details
+        
         axios.get("http://10.85.92.138:8002/searchproduct/"+name,authToken()).then((res) => {
-           
-            setDescription({products:res.data})
-            setR({r:res.data.avgRating.reviews})
+          // console.log(res.data)
+            setDescription({products:res.data[0]})
+            
+            setR({r:res.data[0].avgRating})
+            //setG({gr:r.reviews})
            
         }).catch((err) => {
             console.log(err)
         })
        
-        axios.get("http://10.85.92.138:8002/"+loggedInUser+"/orders",authToken()).then((res) => {
-            
-            setOrders({orders:res.data})
-           
-        }).catch((err) => {
-            console.log(err)
-        })
+        
         
     },[])
-    
-    
+    console.log(st.r.reviews)
+   
+var gr = st.r.reviews
     var l = st.r.reviews?.length
+console.log(gr)
     var j
     var x = false
     var y = false
@@ -51,18 +50,10 @@ function Description(props)
     for(var t=0;t<l;t++) {
         sum = sum + st.r.reviews[t].rating
     }
+    console.log(sum)
 var avg=sum/l
 
-    for(j=0;j<o.orders.length;j++)
-    {
-       
-        if(o.orders[j].displayName === state.products.displayName)
-        {
-            x=true
-            break
-        }
-        
-    }
+   
 
     var i
     var rate
@@ -151,8 +142,8 @@ var avg=sum/l
     function submit_feedback()
     {
         var reviewComments = f.feedback
-        var rating
-        axios.post("http://10.85.92.138:8002/"+state.products.displayName+"/reviewproduct",{loggedInUser,reviewComments,rating:rt.rating},authToken()).then((res)=> {
+        var rating = rt.rating
+        axios.post("http://10.85.92.138:8002/"+state.products.displayName+"/reviewproduct",{loggedInUser,reviewComments,rating},authToken()).then((res)=> {
             if(res.status == true) {
                 
                 alert("Review submitted Successfully")
@@ -228,7 +219,8 @@ var avg=sum/l
             </div>
             <div style={{padding:"0px 40px 10px 10px"}}>
              <h5 style={{color:"#728FCE"}}>Customer Reviews</h5>
-             {st.r.reviews.map((rev)=>{
+             
+             {gr.map((rev)=>{
                  return(
                      <>
                         <p>
@@ -243,14 +235,11 @@ var avg=sum/l
                  )
              }
              )
-             }
-             
+            }
              </div>
              &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
              <div style={{pading:"0px 10px 10px 10px"}}>{review_button}</div>
              
-             
-             {isDisplay ? 
               <div>
                <Rater value={rt.rating} maxlength="6" onSelected={handleClick} />
                 
@@ -260,7 +249,7 @@ var avg=sum/l
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <button className="btn" style={{backgroundColor:"#33CCCC",color:"#0A1172"}} onClick={submit_feedback} >submit Feedback</button>
               </div>
-            :null}
+            
             </>  
                      
         )       
