@@ -24,7 +24,7 @@ class Home extends React.Component{
         if(!this.props.loggedIn) return <Redirect to="/login" />;
         return(
             <>
-            <h1>{this.props.user}</h1>
+            <h1>Welcome, {this.props.user}!!!</h1>
             <button class="btn btn-success" onClick={this.logout}>Logout</button>
             </>
         );
