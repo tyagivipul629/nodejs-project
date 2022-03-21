@@ -46,12 +46,18 @@ class App extends React.Component {
         user: user
     })
 }
+  unsetUser=()=>{
+    this.setState({
+      loggedIn: false,
+      user: ""
+  })
+  }
 
   render(){
     return (
       <>
     {this.state.loading?<h1>Loading...</h1>:<Switch>
-      <Route exact path="/" render={(props)=>(<Home {...props} loggedIn={this.state.loggedIn} user={this.state.user} />)} />
+      <Route exact path="/" render={(props)=>(<Home {...props} loggedIn={this.state.loggedIn} user={this.state.user} unsetUser={this.unsetUser} />)} />
       <Route exact path="/login" render={(props)=>(<Login {...props} loggedIn={this.state.loggedIn} setUser={this.setUser} />)} />
     </Switch>}
     </>

@@ -21,8 +21,7 @@ class Login extends React.Component{
                 this.props.setUser(res.user);
                 this.setState({
                     loggedIn: true
-                })
-                
+                }) 
             }
                 
         })
